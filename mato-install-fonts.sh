@@ -451,6 +451,7 @@ else
 fi
 
 _scan_alegreya() {
+  set +e
   ALEGREYA_KEYS=()
   for dir in "${ALEGREYA_SEARCH_DIRS[@]}"; do
     [[ -d "$dir" ]] || continue
@@ -464,9 +465,10 @@ _scan_alegreya() {
         Alegreya-Italic)     ALEGREYA_AlegreyaI="$otf";  ALEGREYA_KEYS+=(AlegreyaI)  ;;
         Alegreya-BoldItalic) ALEGREYA_AlegreyaBI="$otf"; ALEGREYA_KEYS+=(AlegreyaBI) ;;
       esac
-    done < <(find "$dir" -name "Alegreya-*.otf" 2>/dev/null)
+    done < <(find "$dir" -name "Alegreya-*.otf" -print 2>/dev/null)
     [[ ${#ALEGREYA_KEYS[@]} -gt $_before ]] && break
   done
+  set -e
 }
 
 _scan_alegreya
