@@ -49,7 +49,13 @@ if [[ "$OS" == "Darwin" ]]; then
   fi
 else
   # System devpdf dir (for enc/, map/, download)
-  GROFF_SYSTEM_DEVPDF=$(find /usr/share/groff -maxdepth 4 -type d -name devpdf 2>/dev/null | head -1)
+  GROFF_SYSTEM_DEVPDF=$(
+  find /usr/share/groff /usr/local/share/groff -type d -name devpdf 2>/dev/null \
+  | grep -v '/site-font/' \
+  | sort -V \
+  | head -n 1
+  )
+
   if [[ -z "$GROFF_SYSTEM_DEVPDF" ]]; then
     echo "could not locate groff devpdf font directory under /usr/share/groff!" 1>&2
     exit 1
@@ -236,6 +242,7 @@ else
 fi
 
 _scan_minion() {
+  set +e
   MINION_KEYS=()
   for dir in "${MINION_SEARCH_DIRS[@]}"; do
     [[ -d "$dir" ]] || continue
@@ -249,9 +256,11 @@ _scan_minion() {
         MinionPro-It)       MINION_MinionI="$otf";  MINION_KEYS+=(MinionI)  ;;
         MinionPro-BoldIt)   MINION_MinionBI="$otf"; MINION_KEYS+=(MinionBI) ;;
       esac
-    done < <(find "$dir" -name "MinionPro-*.otf" 2>/dev/null)
+    done < <(find "$dir" -name "MinionPro-*.otf" -print 2>/dev/null)
+
     [[ ${#MINION_KEYS[@]} -gt $_before ]] && break
   done
+  set -e
 }
 
 _scan_minion
