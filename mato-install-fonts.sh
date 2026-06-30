@@ -460,12 +460,22 @@ _scan_alegreya() {
       local base
       base=$(basename "$otf" .otf)
       case "$base" in
+        # Alegreya (original family)
         Alegreya-Regular)    ALEGREYA_AlegreyaR="$otf";  ALEGREYA_KEYS+=(AlegreyaR)  ;;
         Alegreya-Bold)       ALEGREYA_AlegreyaB="$otf";  ALEGREYA_KEYS+=(AlegreyaB)  ;;
         Alegreya-Italic)     ALEGREYA_AlegreyaI="$otf";  ALEGREYA_KEYS+=(AlegreyaI)  ;;
         Alegreya-BoldItalic) ALEGREYA_AlegreyaBI="$otf"; ALEGREYA_KEYS+=(AlegreyaBI) ;;
+        # Alegreya Sans / Alegreya Sans SC (Downloaded OTF Fonts for Debian)
+        AlegreyaSans-Regular|AlegreyaSansSC-Regular)
+                              ALEGREYA_AlegreyaR="$otf";  ALEGREYA_KEYS+=(AlegreyaR)  ;;
+        AlegreyaSans-Italic|AlegreyaSansSC-Italic)
+                              ALEGREYA_AlegreyaI="$otf";  ALEGREYA_KEYS+=(AlegreyaI)  ;;
+        AlegreyaSans-Bold|AlegreyaSansSC-Bold)
+                              ALEGREYA_AlegreyaB="$otf";  ALEGREYA_KEYS+=(AlegreyaB)  ;;
+        AlegreyaSans-BoldItalic|AlegreyaSansSC-BoldItalic)
+                              ALEGREYA_AlegreyaBI="$otf"; ALEGREYA_KEYS+=(AlegreyaBI) ;;
       esac
-    done < <(find "$dir" -name "Alegreya-*.otf" -print 2>/dev/null)
+    done < <(find "$dir" -name "Alegreya*.otf" -print 2>/dev/null)
     [[ ${#ALEGREYA_KEYS[@]} -gt $_before ]] && break
   done
   set -e
