@@ -535,9 +535,17 @@ _scan_grenzegothisch() {
         GrenzeGothisch-Bold)       GRENZEGOTHISCH_GrenzeGothischB="$font";  GRENZEGOTHISCH_KEYS+=(GrenzeGothischB)  ;;
         GrenzeGothisch-Italic)     GRENZEGOTHISCH_GrenzeGothischI="$font";  GRENZEGOTHISCH_KEYS+=(GrenzeGothischI)  ;;
         GrenzeGothisch-BoldItalic) GRENZEGOTHISCH_GrenzeGothischBI="$font"; GRENZEGOTHISCH_KEYS+=(GrenzeGothischBI) ;;
+        # Without the extra "h"
+        GrenzeGotisch-Regular)     GRENZEGOTHISCH_GrenzeGothischR="$font";  GRENZEGOTHISCH_KEYS+=(GrenzeGothischR)  ;;
+        GrenzeGotisch-Bold)        GRENZEGOTHISCH_GrenzeGothischB="$font";  GRENZEGOTHISCH_KEYS+=(GrenzeGothischB)  ;;
+        GrenzeGotisch-Italic)      GRENZEGOTHISCH_GrenzeGothischI="$font";  GRENZEGOTHISCH_KEYS+=(GrenzeGothischI)  ;;
+        GrenzeGotisch-BoldItalic)  GRENZEGOTHISCH_GrenzeGothischBI="$font"; GRENZEGOTHISCH_KEYS+=(GrenzeGothischBI) ;;
         GrenzeGotisch)             GRENZEGOTHISCH_GrenzeGothischR="$font";  GRENZEGOTHISCH_KEYS+=(GrenzeGothischR)  ;;
       esac
-    done < <(find "$dir" \( -name "GrenzeGothisch-*.otf" -o -name "GrenzeGotisch*.ttf" \) -print 2>/dev/null)
+    done < <(find "$dir" \
+  \( -iname "GrenzeGothisch-*" -a \( -iname "*.otf" -o -iname "*.ttf" \) \
+   -o -iname "GrenzeGotisch-*" -a \( -iname "*.otf" -o -iname "*.ttf" \) \) \
+  -print 2>/dev/null)
     [[ ${#GRENZEGOTHISCH_KEYS[@]} -gt $_before ]] && break
   done
   set -e
