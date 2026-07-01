@@ -516,6 +516,7 @@ else
 fi
 
 _scan_grenzegothisch() {
+  set +e
   GRENZEGOTHISCH_KEYS=()
   for dir in "${GRENZEGOTHISCH_SEARCH_DIRS[@]}"; do
     [[ -d "$dir" ]] || continue
@@ -536,9 +537,10 @@ _scan_grenzegothisch() {
         GrenzeGothisch-BoldItalic) GRENZEGOTHISCH_GrenzeGothischBI="$font"; GRENZEGOTHISCH_KEYS+=(GrenzeGothischBI) ;;
         GrenzeGotisch)             GRENZEGOTHISCH_GrenzeGothischR="$font";  GRENZEGOTHISCH_KEYS+=(GrenzeGothischR)  ;;
       esac
-    done < <(find "$dir" \( -name "GrenzeGothisch-*.otf" -o -name "GrenzeGotisch*.ttf" \) 2>/dev/null)
+    done < <(find "$dir" \( -name "GrenzeGothisch-*.otf" -o -name "GrenzeGotisch*.ttf" \) -print 2>/dev/null)
     [[ ${#GRENZEGOTHISCH_KEYS[@]} -gt $_before ]] && break
   done
+  set -e
 }
 
 _scan_grenzegothisch
