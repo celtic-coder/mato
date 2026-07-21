@@ -4,3 +4,4 @@ test*
 termpdf.log
 samples/letter/
 *.swp
+pr-diff.txt
